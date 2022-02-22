@@ -33,13 +33,10 @@ public final class MbarrrManyItems extends JavaPlugin {
         // Plugin startup logic
         getServer().getPluginCommand("Debug").setExecutor(new DebugCommand(this));
 
+        getServer().getPluginManager().registerEvents(new ArmourListener(), this);
+
 
         TestArmour testArmour = new TestArmour(ArmourSlot.Boots, Material.LEATHER_BOOTS, 0, this, PotionEffectType.SPEED, 2);
-
-
-
-
-
     }
 
     @Override
@@ -47,7 +44,7 @@ public final class MbarrrManyItems extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    public void addTag(NamespacedKey key, int val, ItemStack item){
+    public void addTag(NamespacedKey key, ItemStack item, int val){
         ItemMeta itemMeta = item.getItemMeta();
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
         container.set(key, PersistentDataType.INTEGER, val);
@@ -64,6 +61,10 @@ public final class MbarrrManyItems extends JavaPlugin {
         ItemMeta itemMeta = item.getItemMeta();
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
         return container.get(key, PersistentDataType.INTEGER);
+    }
+
+    public void addArmourTag(ItemStack item, int val){
+        addTag(armourKey, item, val);
     }
 
     public boolean hasArmourTag(ItemStack armour){
