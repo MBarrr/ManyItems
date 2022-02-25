@@ -1,15 +1,17 @@
 package github.mbarrr.mbarrrmanyitems;
 
+import github.mbarrr.mbarrrmanyitems.Armour.ArmourSlot;
+import github.mbarrr.mbarrrmanyitems.Armour.CustomArmour;
+import github.mbarrr.mbarrrmanyitems.Armour.DoubleJumpBoots;
+import github.mbarrr.mbarrrmanyitems.Armour.TestArmour;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
-import sun.security.util.Debug;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,15 +35,20 @@ public final class MbarrrManyItems extends JavaPlugin {
         // Plugin startup logic
         getServer().getPluginCommand("Debug").setExecutor(new DebugCommand(this));
 
-        getServer().getPluginManager().registerEvents(new ArmourListener(), this);
 
+        TestArmour testArmour = new TestArmour(ArmourSlot.Boots, Material.LEATHER_BOOTS, 0, this);
 
-        TestArmour testArmour = new TestArmour(ArmourSlot.Boots, Material.LEATHER_BOOTS, 0, this, PotionEffectType.SPEED, 2);
+        DoubleJumpBoots doubleJumpBoots = new DoubleJumpBoots(ArmourSlot.Boots, Material.DIAMOND_BOOTS, 1, this);
+
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+
+        for(CustomArmour armour:armours){
+            armour.onRestart();
+        }
     }
 
     public void addTag(NamespacedKey key, ItemStack item, int val){
@@ -80,8 +87,25 @@ public final class MbarrrManyItems extends JavaPlugin {
         this.armours.add(armour);
     }
 
+    public void addEnchantment(ItemStack itemStack){
+
+    }
+
+    public void setDisplayAttributes(ItemStack item, String title, List<String> lore){
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(title);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+    }
+
+
+
+
+
     public CustomArmour getCustomArmour(int index){
         return armours.get(index);
     }
+
+
 
 }
