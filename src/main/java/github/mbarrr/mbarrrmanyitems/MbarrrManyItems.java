@@ -1,17 +1,14 @@
 package github.mbarrr.mbarrrmanyitems;
 
-import github.mbarrr.mbarrrmanyitems.Armour.ArmourSlot;
 import github.mbarrr.mbarrrmanyitems.Armour.CustomArmour;
-import github.mbarrr.mbarrrmanyitems.Armour.DoubleJumpBoots;
-import github.mbarrr.mbarrrmanyitems.Armour.TestArmour;
-import org.bukkit.Material;
+import github.mbarrr.mbarrrmanyitems.Armour.Boots.DoubleJumpBoots;
+import github.mbarrr.mbarrrmanyitems.Armour.Helmets.SlimeHead;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +20,11 @@ import java.util.List;
 
 //use runnables to give players potion effect for a short amount of time, until they take off armour
 
+/**
+ * Dragon head itme
+ *
+ * Change modelTag to take 10000000 and add tag
+ */
 
 public final class MbarrrManyItems extends JavaPlugin {
 
@@ -35,10 +37,8 @@ public final class MbarrrManyItems extends JavaPlugin {
         // Plugin startup logic
         getServer().getPluginCommand("Debug").setExecutor(new DebugCommand(this));
 
-
-        TestArmour testArmour = new TestArmour(ArmourSlot.Boots, Material.LEATHER_BOOTS, 0, this);
-
-        DoubleJumpBoots doubleJumpBoots = new DoubleJumpBoots(ArmourSlot.Boots, Material.DIAMOND_BOOTS, 1, this);
+        DoubleJumpBoots doubleJumpBoots = new DoubleJumpBoots(0, this);
+        SlimeHead slimeHead = new SlimeHead(1, this);
 
     }
 

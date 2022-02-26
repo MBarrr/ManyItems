@@ -1,9 +1,12 @@
 package github.mbarrr.mbarrrmanyitems;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class DebugCommand implements CommandExecutor {
 
@@ -12,30 +15,28 @@ public class DebugCommand implements CommandExecutor {
     public DebugCommand(MbarrrManyItems instance){
         this.instance = instance;
     }
-    /**
-     * Executes the given command, returning its success.
-     * <br>
-     * If false is returned, then the "usage" plugin.yml entry for this command
-     * (if defined) will be sent to the player.
-     *
-     * @param sender  Source of the command
-     * @param command Command which was executed
-     * @param label   Alias of the command which was used
-     * @param args    Passed command arguments
-     * @return true if a valid command, otherwise false
-     */
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(!(sender instanceof Player)) return false;
 
-        int index = Integer.parseInt(args[0]);
+        if(args[0].equalsIgnoreCase("get")) {
 
-        Player player = (Player) sender;
+            int index = Integer.parseInt(args[1]);
 
-        player.getInventory().addItem(instance.getCustomArmour(index).getArmour());
+            Player player = (Player) sender;
 
+            player.getInventory().addItem(instance.getCustomArmour(index).getArmour());
+        }
 
+        else{
+            ItemStack test = new ItemStack(Material.WOODEN_HOE);
+            ItemMeta meta = test.getItemMeta();
+            meta.setCustomModelData(1234567);
+            test.setItemMeta(meta);
+            ((Player) sender).getInventory().addItem(test);
+        }
 
         return true;
     }

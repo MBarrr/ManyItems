@@ -1,5 +1,7 @@
-package github.mbarrr.mbarrrmanyitems.Armour;
+package github.mbarrr.mbarrrmanyitems.Armour.Boots;
 
+import github.mbarrr.mbarrrmanyitems.Armour.ArmourSlot;
+import github.mbarrr.mbarrrmanyitems.Armour.CustomArmour;
 import github.mbarrr.mbarrrmanyitems.MbarrrManyItems;
 
 import org.bukkit.Material;
@@ -13,15 +15,14 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
-/** TODO
- *
+/** TODO Currently works off of the fly permission being handed back to the player upon effect renewal, this should be changed to it's own runnable with a set time to remove inconsistencies
  *
  */
 
-public class DoubleJumpBoots extends CustomArmour{
+public class DoubleJumpBoots extends CustomArmour {
 
-    public DoubleJumpBoots(ArmourSlot armourSlot, Material material, int tag, MbarrrManyItems instance) {
-        super(armourSlot, material, tag, instance);
+    public DoubleJumpBoots(int tag, MbarrrManyItems instance) {
+        super(ArmourSlot.BOOTS, Material.DIAMOND_BOOTS, tag, instance);
 
         List<String> lore = new ArrayList<>();
         lore.add("§6Grants the wearer the ability to double jump!");

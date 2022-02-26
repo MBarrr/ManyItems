@@ -11,14 +11,17 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 /**TODO
@@ -27,13 +30,13 @@ import java.util.List;
 
 public class CustomArmour implements Listener {
 
-    String title;
-    int slot;
+    private String title;
+    private int slot;
     private int tag;
-    ItemStack armourItem;
+    private ItemStack armourItem;
     private MbarrrManyItems instance;
     private Collection<PotionEffect> potionEffects = new ArrayList<>();
-    List<Player> players = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
     private BukkitRunnable runnable;
 
 
@@ -48,7 +51,6 @@ public class CustomArmour implements Listener {
             }
 
         armourItem = new ItemStack(material);
-
         instance.addArmourTag(armourItem, tag);
 
         runnable = new BukkitRunnable() {
@@ -57,23 +59,15 @@ public class CustomArmour implements Listener {
                 check();
             }
         };
-
         runnable.runTaskTimer(instance, 0, 5 * 20L);
 
         instance.getServer().getPluginManager().registerEvents(this, instance);
         instance.addArmour(this);
     }
 
-    public ItemStack getArmour(){
-        return armourItem;
-    }
-
-    public void addEffect(PotionEffectType potionEffectType, int amplifier){
-        potionEffects.add(new PotionEffect(potionEffectType, 6*20, amplifier));
-
-    }
-
-    //Listen for player putting on armour
+    /**
+     *     Listen for player putting on armour
+     */
     @EventHandler
     public void playerArmourEvent(InventoryClickEvent e){
         //return if clicked inventory is not player's inventory or if clicker is not player
@@ -81,7 +75,6 @@ public class CustomArmour implements Listener {
         if(!(e.getClickedInventory() instanceof PlayerInventory)) return;
 
         InventoryAction inventoryAction = e.getAction();
-
         ItemStack item;
 
         //get correct item from event, in the case of MOVE_TO_OTHER_INVENTORY (shift clicking) another approach has to be taken, as I could not find the item from the event.
@@ -102,35 +95,28 @@ public class CustomArmour implements Listener {
                 return;
         }
 
-
-
         //return if clicked slot is not armour slot of this ite
         if(!e.getSlotType().equals(InventoryType.SlotType.ARMOR)) return;
-
-
-        e.getWhoClicked().sendMessage("clicked3");
-
-
         if(!checkArmourItem(item)) return;
 
-        e.getWhoClicked().sendMessage("clicked5");
+
         //Armour is valid
-
-
         Player player = (Player) e.getWhoClicked();
         if(players.contains(player)) return;
-        e.getWhoClicked().sendMessage("clicked6");
 
         players.add(player);
         playerAddEffect(player);
     }
 
-    private void checkPutOn(Player player){
+    /**
+     * Give player effects and add to list if player is wearing armour according to checkPlayerArmour
+     * @param player
+     */
+    protected void checkPutOn(Player player){
         //Wait one tick and check if the player is wearing the piece of aromur
         BukkitRunnable iHateLife = new BukkitRunnable() {
             @Override
             public void run() {
-
                 if(checkPlayerArmour(player)){
                     players.add(player);
                     playerAddEffect(player);
@@ -141,45 +127,55 @@ public class CustomArmour implements Listener {
     }
 
 
-
+    /**
+     * This throws a ConcurrentModificationException when a player is dropped from the list, I'm ignoring it on account of the fact I've no idea about it
+     */
     private void check(){
-        for(Player player:players){
-
-            if(checkPlayerArmour(player)){
-                Bukkit.broadcastMessage("Armour is correct");
-                playerRenewEffect(player);
-                break;
+        try{
+            for(Player player:players){
+                if (checkPlayerArmour(player)) {
+                    playerRenewEffect(player);
+                    break;
+                }
+                removePlayerEffect(player);
             }
-
-            removePlayerEffect(player);
-            Bukkit.broadcastMessage("end");
-        }
+        }catch(ConcurrentModificationException e){}
     }
 
-    //Listen for player taking off armour
+    /**
+     *     Listen for player leaving with armour on
+     */
 
     @EventHandler
     public void playerLeaveEvent(PlayerQuitEvent e){
         Player p = e.getPlayer();
-
         if(players.contains(p)) removePlayerEffect(p);
     }
 
+    /**
+     * Listen for player joining with armour on
+     * @param e
+     */
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent e){
         Player p = e.getPlayer();
 
-
         if(checkPlayerArmour(p)){
-            Bukkit.broadcastMessage("Armour is correct");
             playerAddEffect(p);
             players.add(p);
         }
     }
 
-    //Handles when a player puts on armour via right clicking with the item in their hand
+    /**
+     * Handles when a player puts on armour via right-clicking with the item in their hand
+     * @param e
+     */
     @EventHandler
     public void playerRightClickArmour(PlayerInteractEvent e){
+        if(!e.getHand().equals(EquipmentSlot.HAND)) {
+            e.setCancelled(true);
+            return;
+        }
 
         ItemStack item = e.getItem();
         if(item == null) return;
@@ -187,12 +183,22 @@ public class CustomArmour implements Listener {
         checkPutOn(e.getPlayer());
     }
 
+    /**
+     * Checks whether the player is wearing the correct item in the armour slot relating to that item
+     * @param p
+     * @return
+     */
     private boolean checkPlayerArmour(Player p){
         ItemStack playerArmour = p.getInventory().getArmorContents()[3-slot];
         return checkArmourItem(playerArmour);
     }
 
-    private boolean checkArmourItem(ItemStack item){
+    /**
+     * Checks whether an item is not null and has the right armour tag
+     * @param item
+     * @return
+     */
+    protected boolean checkArmourItem(ItemStack item){
         if(!(item != null && instance.hasArmourTag(item))) return false;
 
         if(instance.getArmourTag(item) == tag) return true;
@@ -200,6 +206,11 @@ public class CustomArmour implements Listener {
 
     }
 
+    /**
+     * Checks whether player is in the player list for this armour
+     * @param player
+     * @return
+     */
     protected boolean isPlayerWearingArmour(Player player){
         return players.contains(player);
     }
@@ -207,6 +218,10 @@ public class CustomArmour implements Listener {
     protected void playerAddEffect(Player player){
         player.addPotionEffects(potionEffects);
 
+    }
+
+    protected void addPlayer(Player p){
+        players.add(p);
     }
 
     protected void removePlayerEffect(Player player){
@@ -220,6 +235,11 @@ public class CustomArmour implements Listener {
     public void setDisplayAttributes(String title, List<String> lore){
         instance.setDisplayAttributes(armourItem, title, lore);
         this.title = title;
+    }
+
+    public void addEffect(PotionEffectType potionEffectType, int amplifier){
+        potionEffects.add(new PotionEffect(potionEffectType, 6*20, amplifier));
+
     }
 
     public void addEnchantment(Enchantment enchantment, int level){
@@ -236,12 +256,13 @@ public class CustomArmour implements Listener {
         }
     }
 
+    protected void setModelTag(int modelTag){
+        ItemMeta itemMeta = armourItem.getItemMeta();
+        itemMeta.setCustomModelData(modelTag);
+        armourItem.setItemMeta(itemMeta);
+    }
 
-    //Listen for player logging in with armour on
-
-    //listen for player logging off with armour on
-
-    //Check for player leaving
-
-
+    public ItemStack getArmour(){
+        return armourItem;
+    }
 }
