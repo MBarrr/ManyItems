@@ -13,15 +13,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//armour
-//potion effects
-//namespacedkeys affect
-
-//use runnables to give players potion effect for a short amount of time, until they take off armour
-
 /**
  * Dragon head itme
+ *  totem
+ *  epitome
+ *  end crystal
  *
  * Change modelTag to take 10000000 and add tag
  */

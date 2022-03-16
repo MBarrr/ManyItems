@@ -31,9 +31,11 @@ public class DebugCommand implements CommandExecutor {
         }
 
         else{
-            ItemStack test = new ItemStack(Material.WOODEN_HOE);
+            int i = Integer.parseInt(args[0]);
+
+            ItemStack test = new ItemStack(Material.DIAMOND_HOE);
             ItemMeta meta = test.getItemMeta();
-            meta.setCustomModelData(1234567);
+            meta.setCustomModelData(1000000+i);
             test.setItemMeta(meta);
             ((Player) sender).getInventory().addItem(test);
         }

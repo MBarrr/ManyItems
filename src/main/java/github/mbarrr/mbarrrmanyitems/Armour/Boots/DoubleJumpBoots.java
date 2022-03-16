@@ -27,7 +27,7 @@ public class DoubleJumpBoots extends CustomArmour {
         List<String> lore = new ArrayList<>();
         lore.add("§6Grants the wearer the ability to double jump!");
 
-        setDisplayAttributes("§eDJB", lore);
+        setDisplayAttributes("§echangeme", lore);
 
         addEnchantment(Enchantment.FROST_WALKER, 1);
     }
@@ -42,7 +42,7 @@ public class DoubleJumpBoots extends CustomArmour {
 
         //Cancel event so player is not flyilng, set player velocity/'boost' player, then disallow flight
         e.setCancelled(true);
-        p.setVelocity(p.getVelocity().add(new Vector(0, 1, 0)));
+        p.setVelocity(p.getVelocity().add(new Vector(0, 0.5, 0)));
         spawnParticles(e.getPlayer());
         p.setAllowFlight(false);
     }

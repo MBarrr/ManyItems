@@ -92,23 +92,27 @@ public class Helmet extends CustomArmour {
     @Override
     @EventHandler
     public void playerRightClickArmour(PlayerInteractEvent e){
-        //return if armour is in offhand
-        if(!e.getHand().equals(EquipmentSlot.HAND)) {
-            e.setCancelled(true);
-            return;
+        try {
+            //return if armour is in offhand
+            if (!e.getHand().equals(EquipmentSlot.HAND)) {
+                e.setCancelled(true);
+                return;
+            }
+
+            //Return if item is null or does not have correct tags
+            ItemStack item = e.getItem();
+            if (item == null) return;
+            if (!checkArmourItem(item)) return;
+
+            //Swap equipped helmet with helmet item in hand
+            ItemStack currentArmour = e.getPlayer().getInventory().getHelmet();
+            e.getPlayer().getInventory().setHelmet(item);
+            e.getPlayer().getInventory().setItemInMainHand(currentArmour);
+
+            //Check player has armour on
+            checkPutOn(e.getPlayer());
+        }catch(AssertionError er){
+
         }
-
-        //Return if item is null or does not have correct tags
-        ItemStack item = e.getItem();
-        if(item == null) return;
-        if(!checkArmourItem(item)) return;
-
-        //Swap equipped helmet with helmet item in hand
-        ItemStack currentArmour = e.getPlayer().getInventory().getHelmet();
-        e.getPlayer().getInventory().setHelmet(item);
-        e.getPlayer().getInventory().setItemInMainHand(currentArmour);
-
-        //Check player has armour on
-        checkPutOn(e.getPlayer());
     }
 }
