@@ -49,7 +49,7 @@ public class PhantomMount extends EntityPhantom {
                 this.a(this, false);
 
                 //Move shulker in player direction if player is moving
-                if(t) move(EnumMoveType.SELF, new Vec3D(entityliving.getLookDirection().x*speed/2.5, entityliving.getLookDirection().y*speed/5, entityliving.getLookDirection().z*speed/2.5));
+                if(t) move(EnumMoveType.SELF, new Vec3D(entityliving.getLookDirection().x*speed/2.5, entityliving.getLookDirection().y*speed/2.5, entityliving.getLookDirection().z*speed/2.5));
             } else {
                 //Shulker  has no passenger
                 this.aE = 0.02F;
