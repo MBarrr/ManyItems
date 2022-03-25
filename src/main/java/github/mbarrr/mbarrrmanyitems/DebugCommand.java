@@ -1,10 +1,18 @@
 package github.mbarrr.mbarrrmanyitems;
 
+import github.mbarrr.mbarrrmanyitems.Handheld.Mounts.PhantomMount;
+import net.minecraft.server.v1_16_R3.EntityPlayer;
+import net.minecraft.server.v1_16_R3.EntityTypes;
+import net.minecraft.server.v1_16_R3.World;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -22,12 +30,25 @@ public class DebugCommand implements CommandExecutor {
         if(!(sender instanceof Player)) return false;
 
         if(args[0].equalsIgnoreCase("get")) {
-
-            int index = Integer.parseInt(args[1]);
+            sender.sendMessage("starting");
 
             Player player = (Player) sender;
 
-            player.getInventory().addItem(instance.getCustomArmour(index).getArmour());
+            Location loc = player.getLocation();
+
+            CraftPlayer cp = (CraftPlayer) player;
+
+            EntityPlayer nmsPlayer = cp.getHandle();
+
+            World world = ((CraftWorld) loc.getWorld()).getHandle();
+
+
+            PhantomMount phantomMount = new PhantomMount(EntityTypes.PHANTOM, world, nmsPlayer, 2, 5);
+            phantomMount.setPosition(loc.getX(), loc.getY(), loc.getZ());
+
+            world.addEntity(phantomMount, CreatureSpawnEvent.SpawnReason.CUSTOM);
+
+            sender.sendMessage("stopped");
         }
 
         else{
@@ -39,6 +60,8 @@ public class DebugCommand implements CommandExecutor {
             test.setItemMeta(meta);
             ((Player) sender).getInventory().addItem(test);
         }
+
+
 
         return true;
     }

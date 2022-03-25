@@ -1,9 +1,17 @@
 package github.mbarrr.mbarrrmanyitems;
 
+import com.shampaggon.crackshot.CSUtility;
 import github.mbarrr.mbarrrmanyitems.Armour.CustomArmour;
 import github.mbarrr.mbarrrmanyitems.Armour.Boots.DoubleJumpBoots;
 import github.mbarrr.mbarrrmanyitems.Armour.Helmets.SlimeHead;
+import github.mbarrr.mbarrrmanyitems.Handheld.Mounts.BroomStick;
+import github.mbarrr.mbarrrmanyitems.Handheld.HandheldItem;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -22,16 +30,34 @@ import java.util.List;
  * Change modelTag to take 10000000 and add tag
  */
 
-public final class MbarrrManyItems extends JavaPlugin {
+public final class MbarrrManyItems extends JavaPlugin{
 
-    NamespacedKey armourKey = new NamespacedKey(this, "MI-Armour");
+    private NamespacedKey armourKey = new NamespacedKey(this, "MI-Armour");
 
-    List<CustomArmour> armours = new ArrayList<>();
+    private List<CustomArmour> armours = new ArrayList<>();
+    List<HandheldItem> handheldItems = new ArrayList<>();
+
+    private CSUtility csUtility;
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
         getServer().getPluginCommand("Debug").setExecutor(new DebugCommand(this));
+
+        try {
+            csUtility = new CSUtility();
+        }catch(NoClassDefFoundError e){
+            Bukkit.getConsoleSender().sendMessage("********************************************************" +
+                    "CSUtility FAILED TO INITIALISE IN ManyItems onEnable method. PLUGIN WILL RUN IN LIMP HOME MODE" +
+                    "********************************************************");
+            return;
+        }
+
+        BroomStick broomStick = new BroomStick();
+        handheldItems.add(broomStick);
+
+
+        // Plugin startup logic
+
 
         DoubleJumpBoots doubleJumpBoots = new DoubleJumpBoots(0, this);
         SlimeHead slimeHead = new SlimeHead(1, this);
@@ -94,14 +120,15 @@ public final class MbarrrManyItems extends JavaPlugin {
         item.setItemMeta(meta);
     }
 
-
-
-
-
     public CustomArmour getCustomArmour(int index){
         return armours.get(index);
     }
 
+    public CSUtility getCSInstance(){
+        return csUtility;
+    }
 
-
+    public static MbarrrManyItems getInstance(){
+        return (MbarrrManyItems) Bukkit.getPluginManager().getPlugin("MbarrrManyItems");
+    }
 }
