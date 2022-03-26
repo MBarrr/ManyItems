@@ -1,23 +1,13 @@
-package github.mbarrr.mbarrrmanyitems.Handheld.Mounts;
+package github.mbarrr.mbarrrmanyitems.Items.Handheld.Mounts.Ground;
 
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Mounts.Mount;
 import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.event.entity.EntityTargetEvent;
 
+public class GroundMount extends Mount {
 
-public class PhantomMount extends EntityPhantom {
-
-    EntityPlayer owner;
-    float speed;
-
-    public PhantomMount(EntityTypes<? extends EntityPhantom> entitytypes, World world, EntityPlayer player, float speed, int size) {
-        super(entitytypes, world);
-
-        this.owner = player;
-        this.setSize(size);
-        this.updateSize();
-        this.speed = speed;
-
-        player.startRiding(this);
+    public GroundMount(EntityTypes<? extends EntityInsentient> entitytypes, World world, EntityPlayer player, float speed) {
+        super(entitytypes, world, player, speed);
     }
 
     @Override
@@ -49,20 +39,13 @@ public class PhantomMount extends EntityPhantom {
                 this.a(this, false);
 
                 //Move shulker in player direction if player is moving
-                if(t) move(EnumMoveType.SELF, new Vec3D(entityliving.getLookDirection().x*speed/2.5, entityliving.getLookDirection().y*speed/2.5, entityliving.getLookDirection().z*speed/2.5));
+                if(t) move(EnumMoveType.SELF, new Vec3D(entityliving.getLookDirection().x*getSpeed()/2.5, entityliving.getLookDirection().y*getSpeed()/2.5, entityliving.getLookDirection().z*getSpeed()/2.5));
             } else {
                 //Shulker  has no passenger
                 this.aE = 0.02F;
-                this.setGoalTarget(owner, EntityTargetEvent.TargetReason.CUSTOM, true);
+                this.setGoalTarget(getOwner(), EntityTargetEvent.TargetReason.CUSTOM, true);
                 super.g(vec3d);
             }
         }
-    }
-
-
-
-    @Override
-    public Entity getRidingPassenger() {
-        return this.getPassengers().isEmpty() ? null : (Entity)this.getPassengers().get(0);
     }
 }

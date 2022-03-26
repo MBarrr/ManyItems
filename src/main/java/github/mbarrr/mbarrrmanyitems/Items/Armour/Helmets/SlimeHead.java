@@ -1,4 +1,4 @@
-package github.mbarrr.mbarrrmanyitems.Armour.Helmets;
+package github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets;
 
 import github.mbarrr.mbarrrmanyitems.MbarrrManyItems;
 import org.bukkit.entity.Entity;

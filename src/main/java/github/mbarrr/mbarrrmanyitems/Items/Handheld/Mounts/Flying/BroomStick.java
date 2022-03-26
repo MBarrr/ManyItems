@@ -1,22 +1,20 @@
-package github.mbarrr.mbarrrmanyitems.Handheld.Mounts;
+package github.mbarrr.mbarrrmanyitems.Items.Handheld.Mounts.Flying;
 
 import com.shampaggon.crackshot.events.WeaponShootEvent;
-import github.mbarrr.mbarrrmanyitems.Handheld.HandheldItem;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.CrackShotItem;
 import net.minecraft.server.v1_16_R3.EntityPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-public class BroomStick extends HandheldItem {
+public class BroomStick extends CrackShotItem {
 
     Villager target;
     Phantom carrier;
     Player owner;
 
     public BroomStick() {
-        super("Broomstick");
+        super("Broomstick", 0);
     }
 
     @Override

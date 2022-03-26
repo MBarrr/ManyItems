@@ -6,5 +6,8 @@ authors: [ Mbarrr ]
 website: github.com/mbarrr
 commands:
   Debug:
-    description:
-    usage:
+    description: debug
+    usage: debug
+  MainMenu:
+    description: Admin command for managing items
+    usage: /MainMenu help

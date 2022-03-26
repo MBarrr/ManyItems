@@ -1,5 +1,6 @@
-package github.mbarrr.mbarrrmanyitems.Armour;
+package github.mbarrr.mbarrrmanyitems.Items.Armour;
 
+import github.mbarrr.mbarrrmanyitems.Items.CustomItem;
 import github.mbarrr.mbarrrmanyitems.MbarrrManyItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -24,16 +25,15 @@ import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
-/**TODO
+/** TODO test everything since changed to inherit CustomItem
  *
  */
 
-public class CustomArmour implements Listener {
+public class CustomArmour extends CustomItem implements Listener {
 
     private String title;
     private int slot;
     private int tag;
-    private ItemStack armourItem;
     private MbarrrManyItems instance;
     private Collection<PotionEffect> potionEffects = new ArrayList<>();
     private List<Player> players = new ArrayList<>();
@@ -50,8 +50,9 @@ public class CustomArmour implements Listener {
             if(armourSlots[i].equals(armourSlot)) slot = i;
             }
 
-        armourItem = new ItemStack(material);
+        ItemStack armourItem = new ItemStack(material);
         instance.addArmourTag(armourItem, tag);
+        setItem(armourItem);
 
         runnable = new BukkitRunnable() {
             @Override
@@ -62,7 +63,6 @@ public class CustomArmour implements Listener {
         runnable.runTaskTimer(instance, 0, 5 * 20L);
 
         instance.getServer().getPluginManager().registerEvents(this, instance);
-        instance.addArmour(this);
     }
 
     /**
@@ -233,7 +233,7 @@ public class CustomArmour implements Listener {
     }
 
     public void setDisplayAttributes(String title, List<String> lore){
-        instance.setDisplayAttributes(armourItem, title, lore);
+        instance.setDisplayAttributes(getItem(), title, lore);
         this.title = title;
     }
 
@@ -244,7 +244,7 @@ public class CustomArmour implements Listener {
 
     public void addEnchantment(Enchantment enchantment, int level){
         try {
-            armourItem.addEnchantment(enchantment, level);
+            getItem().addEnchantment(enchantment, level);
         }catch(IllegalArgumentException e){
             Bukkit.getConsoleSender().sendMessage("Enchantment: "+enchantment.toString() +" level is too high for armour piece: "+title);
         }
@@ -257,12 +257,10 @@ public class CustomArmour implements Listener {
     }
 
     protected void setModelTag(int modelTag){
+        ItemStack armourItem = getItem();
         ItemMeta itemMeta = armourItem.getItemMeta();
         itemMeta.setCustomModelData(modelTag);
         armourItem.setItemMeta(itemMeta);
-    }
-
-    public ItemStack getArmour(){
-        return armourItem;
+        setItem(armourItem);
     }
 }

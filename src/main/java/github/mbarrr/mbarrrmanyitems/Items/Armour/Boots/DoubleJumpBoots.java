@@ -1,7 +1,7 @@
-package github.mbarrr.mbarrrmanyitems.Armour.Boots;
+package github.mbarrr.mbarrrmanyitems.Items.Armour.Boots;
 
-import github.mbarrr.mbarrrmanyitems.Armour.ArmourSlot;
-import github.mbarrr.mbarrrmanyitems.Armour.CustomArmour;
+import github.mbarrr.mbarrrmanyitems.Items.Armour.ArmourSlot;
+import github.mbarrr.mbarrrmanyitems.Items.Armour.CustomArmour;
 import github.mbarrr.mbarrrmanyitems.MbarrrManyItems;
 
 import org.bukkit.Material;

@@ -62,6 +62,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -83,6 +87,11 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CrackShot.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MBarrr</groupId>
+            <artifactId>GUILib</artifactId>
+            <version>1.0.4</version>
         </dependency>
     </dependencies>
 </project>
