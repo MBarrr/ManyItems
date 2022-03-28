@@ -1,7 +1,9 @@
-package github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons;
+package github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Spears;
 
 import com.shampaggon.crackshot.events.WeaponShootEvent;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.CrackShotItem;
+import net.minecraft.server.v1_16_R3.EntityEvoker;
+import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -10,6 +12,16 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Trident is a mid tier weapon/transport item, it is dropped by
+ * poseidon. If a player receives damage while holding the weapon out of water,
+ * the damage received is multiplied by a factor of 1.25, respresenting a
+ * vulnerability. For this reason the trident can be countered by
+ * items such as the lasso, which can draw the user out of water, giving
+ * them a 1.25 vulnerabliity
+ * The trident deals high damage with a low attack speed
+ */
 
 public class Trident extends CrackShotItem {
 
@@ -26,11 +38,15 @@ public class Trident extends CrackShotItem {
         potionEffects.add(nightVision);
     }
 
+    /**
+     * Fired when the trident is shot
+     * @param e Event
+     */
     @Override
     protected void onClick(WeaponShootEvent e) {
         Player player = e.getPlayer();
 
-
+        //If player is in water, apply potion effects
         if(player.isInWater()){
             player.addPotionEffects(potionEffects);
         }

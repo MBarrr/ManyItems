@@ -8,7 +8,7 @@ import github.mbarrr.mbarrrmanyitems.Items.Armour.Boots.DoubleJumpBoots;
 import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.SlimeHead;
 import github.mbarrr.mbarrrmanyitems.Items.CustomItem;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.Mounts.Flying.BroomStick;
-import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Trident;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Spears.Trident;
 import mbarrr.github.guilib.GUILib;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -27,7 +27,7 @@ import java.util.List;
  *  epitome
  *  end crystal
  *  do something with lightning
- *
+ *  airdrop/alien artifact
  *
  * Change modelTag to take 10000000 and add tag
  */
