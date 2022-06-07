@@ -8,6 +8,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -29,18 +30,21 @@ import java.util.List;
  *
  */
 
-public class CustomArmour extends CustomItem implements Listener {
+public class CustomArmour implements Listener {
 
     private String title;
+    private String name;
     private int slot;
     private int tag;
     private MbarrrManyItems instance;
     private Collection<PotionEffect> potionEffects = new ArrayList<>();
     private List<Player> players = new ArrayList<>();
     private BukkitRunnable runnable;
+    private ItemStack item;
 
 
-    public CustomArmour(ArmourSlot armourSlot, Material material, int tag, MbarrrManyItems instance){
+    public CustomArmour(ArmourSlot armourSlot, Material material, int tag, MbarrrManyItems instance, String name){
+        this.name = name;
         this.tag = tag;
         this.instance = instance;
 
@@ -52,7 +56,7 @@ public class CustomArmour extends CustomItem implements Listener {
 
         ItemStack armourItem = new ItemStack(material);
         instance.addArmourTag(armourItem, tag);
-        setItem(armourItem);
+        item = armourItem;
 
         runnable = new BukkitRunnable() {
             @Override
@@ -62,6 +66,7 @@ public class CustomArmour extends CustomItem implements Listener {
         };
         runnable.runTaskTimer(instance, 0, 5 * 20L);
 
+        instance.addCustomArmour(this);
         instance.getServer().getPluginManager().registerEvents(this, instance);
     }
 
@@ -183,6 +188,31 @@ public class CustomArmour extends CustomItem implements Listener {
         checkPutOn(e.getPlayer());
     }
 
+
+    @EventHandler
+    private void entityHitEvent(EntityDamageByEntityEvent e){
+        if(e.getEntity() instanceof Player){
+            if(isPlayerWearingArmour((Player) e.getEntity())){
+                onWearerAttacked(e);
+            }
+        }
+
+        if(e.getDamager() instanceof Player){
+            if(isPlayerWearingArmour((Player) e.getDamager())){
+                onWearerAttack(e);
+            }
+        }
+    }
+
+    protected void onWearerAttacked(EntityDamageByEntityEvent e){
+
+    }
+
+    protected void onWearerAttack(EntityDamageByEntityEvent e){
+
+    }
+
+
     /**
      * Checks whether the player is wearing the correct item in the armour slot relating to that item
      * @param p
@@ -206,12 +236,14 @@ public class CustomArmour extends CustomItem implements Listener {
 
     }
 
+
+
     /**
      * Checks whether player is in the player list for this armour
      * @param player
      * @return
      */
-    protected boolean isPlayerWearingArmour(Player player){
+    public boolean isPlayerWearingArmour(Player player){
         return players.contains(player);
     }
 
@@ -232,8 +264,12 @@ public class CustomArmour extends CustomItem implements Listener {
         player.addPotionEffects(potionEffects);
     }
 
+    public String getName(){
+        return name;
+    }
+
     public void setDisplayAttributes(String title, List<String> lore){
-        instance.setDisplayAttributes(getItem(), title, lore);
+        instance.setDisplayAttributes(item, title, lore);
         this.title = title;
     }
 
@@ -244,7 +280,7 @@ public class CustomArmour extends CustomItem implements Listener {
 
     public void addEnchantment(Enchantment enchantment, int level){
         try {
-            getItem().addEnchantment(enchantment, level);
+            item.addEnchantment(enchantment, level);
         }catch(IllegalArgumentException e){
             Bukkit.getConsoleSender().sendMessage("Enchantment: "+enchantment.toString() +" level is too high for armour piece: "+title);
         }
@@ -256,11 +292,13 @@ public class CustomArmour extends CustomItem implements Listener {
         }
     }
 
+    public String getTitle(){
+        return title;
+    }
+
     protected void setModelTag(int modelTag){
-        ItemStack armourItem = getItem();
-        ItemMeta itemMeta = armourItem.getItemMeta();
+        ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setCustomModelData(modelTag);
-        armourItem.setItemMeta(itemMeta);
-        setItem(armourItem);
+        item.setItemMeta(itemMeta);
     }
 }

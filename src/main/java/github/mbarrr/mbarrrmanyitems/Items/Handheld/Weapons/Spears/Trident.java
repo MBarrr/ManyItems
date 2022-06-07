@@ -2,10 +2,9 @@ package github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Spears;
 
 import com.shampaggon.crackshot.events.WeaponShootEvent;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.CrackShotItem;
-import net.minecraft.server.v1_16_R3.EntityEvoker;
-import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -29,7 +28,7 @@ public class Trident extends CrackShotItem {
     List<PotionEffect> potionEffects = new ArrayList<>();
 
     public Trident() {
-        super("Trident", 1000009);
+        super("Trident", 1000009, false);
         PotionEffect dolphinsGrace = new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 4*20, 3);
         PotionEffect regen = new PotionEffect(PotionEffectType.REGENERATION, 1*20, 1);
         PotionEffect nightVision = new PotionEffect(PotionEffectType.WATER_BREATHING, 4*20, 1);
@@ -43,14 +42,15 @@ public class Trident extends CrackShotItem {
      * @param e Event
      */
     @Override
-    protected void onClick(WeaponShootEvent e) {
+    protected void onShoot(WeaponShootEvent e) {
         Player player = e.getPlayer();
 
         //If player is in water, apply potion effects
         if(player.isInWater()){
             player.addPotionEffects(potionEffects);
         }
-        super.onClick(e);
+
+        super.onShoot(e);
     }
 
     /** TODO TEST THIS METHOD IS CALLED
@@ -58,14 +58,12 @@ public class Trident extends CrackShotItem {
      * the damage is multipled by a factor of 1.25
      * @param e Event
      */
-    @EventHandler
-    protected void playerDamagedEvent(EntityDamageEvent e){
+    @Override
+    protected void onUserHurt(EntityDamageByEntityEvent e) {
+        super.onUserHurt(e);
         //Return if damaged entity is not player
         if(!(e.getEntity() instanceof Player)) return;
         Player player = (Player) e.getEntity();
-
-        //Player is holding trident, and is not in water
-        if(player.getEquipment().getItemInMainHand() == null) return;
 
         if(!player.isInWater() && player.getEquipment().getItemInMainHand().equals(getItem())){
             //Multiply damage by 1.25

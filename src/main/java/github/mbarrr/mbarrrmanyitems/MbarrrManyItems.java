@@ -9,9 +9,9 @@ import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.SlimeHead;
 import github.mbarrr.mbarrrmanyitems.Items.CustomItem;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.Mounts.Flying.BroomStick;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Spears.Trident;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Swords.EbonyBlade;
 import mbarrr.github.guilib.GUILib;
-import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -28,6 +28,7 @@ import java.util.List;
  *  end crystal
  *  do something with lightning
  *  airdrop/alien artifact
+ *weapon turns enemies into chickens
  *
  * Change modelTag to take 10000000 and add tag
  */
@@ -37,6 +38,7 @@ public final class MbarrrManyItems extends JavaPlugin{
     private NamespacedKey armourKey = new NamespacedKey(this, "MI-Armour");
 
     private List<CustomItem> customItems = new ArrayList<>();
+    private List<CustomArmour> customArmours = new ArrayList<>();
 
     private CSUtility csUtility;
 
@@ -46,18 +48,18 @@ public final class MbarrrManyItems extends JavaPlugin{
 
     @Override
     public void onEnable() {
+        
         guiLib = new GUILib(this);
         mainGUI = new MainGUI(guiLib, this);
 
         getServer().getPluginCommand("Debug").setExecutor(new DebugCommand(this));
         getServer().getPluginCommand("MainMenu").setExecutor(new MainGUICommand(this));
 
-
         try {
             csUtility = new CSUtility();
         }catch(NoClassDefFoundError e){
             Bukkit.getConsoleSender().sendMessage("********************************************************" +
-                    "CSUtility FAILED TO INITIALISE IN ManyItems onEnable method. PLUGIN WILL RUN IN LIMP HOME MODE" +
+                    "CSUtility FAILED TO INITIALISE IN ManyItems onEnable method. PLUGIN WILL RUN IN LIMP MODE" +
                     "********************************************************");
             return;
         }
@@ -70,16 +72,24 @@ public final class MbarrrManyItems extends JavaPlugin{
         DoubleJumpBoots doubleJumpBoots = new DoubleJumpBoots(0, this);
         SlimeHead slimeHead = new SlimeHead(1, this);
         Trident trident = new Trident();
+        EbonyBlade ebonyBlade = new EbonyBlade();
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        for(CustomItem customItem:customItems){
-            if(customItem instanceof CustomArmour){
-                ((CustomArmour) customItem).onRestart();
+        for(CustomArmour customArmour:customArmours){
+            customArmour.onRestart();
+        }
+    }
+
+    public CustomArmour getArmour(String armourName){
+        for(CustomArmour customArmour:customArmours){
+            if(customArmour.getName().equals(armourName)){
+                return customArmour;
             }
         }
+        return null;
     }
 
     public void addTag(NamespacedKey key, ItemStack item, int val){
@@ -127,5 +137,8 @@ public final class MbarrrManyItems extends JavaPlugin{
     }
     public MainGUI getMainGUI() {
         return mainGUI;
+    }
+    public void addCustomArmour(CustomArmour customArmour){
+        customArmours.add(customArmour);
     }
 }

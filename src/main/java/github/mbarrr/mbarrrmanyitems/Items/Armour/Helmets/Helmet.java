@@ -17,15 +17,14 @@ public class Helmet extends CustomArmour {
 
     private Material mat;
 
-    public Helmet(int tag, MbarrrManyItems instance) {
-        super(ArmourSlot.HELMET, Material.WOODEN_HOE, tag, instance);
+    public Helmet(int tag, MbarrrManyItems instance, String title) {
+        super(ArmourSlot.HELMET, Material.WOODEN_HOE, tag, instance, title);
 
 
         this.mat = Material.WOODEN_HOE;
 
         int modelTag = 1000000+tag;
         setModelTag(modelTag);
-
     }
 
     @Override

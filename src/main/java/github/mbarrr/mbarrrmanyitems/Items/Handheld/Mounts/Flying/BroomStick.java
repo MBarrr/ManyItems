@@ -14,11 +14,11 @@ public class BroomStick extends CrackShotItem {
     Player owner;
 
     public BroomStick() {
-        super("Broomstick", 0);
+        super("Broomstick", 0, false);
     }
 
     @Override
-    protected void onClick(WeaponShootEvent e) {
+    protected void onShoot(WeaponShootEvent e) {
         owner = e.getPlayer();
 
         Location spawnLoc = e.getPlayer().getLocation();

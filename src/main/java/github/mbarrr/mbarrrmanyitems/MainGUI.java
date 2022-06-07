@@ -8,6 +8,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 
@@ -51,12 +52,17 @@ public class MainGUI extends GUI {
             meta.setLore(lore);
             icon.setItemMeta(meta);
 
-            addItem(icon, menuKey, 0, i, 0);
+            addItem(icon, menuKey, i, i, 0);
         }
     }
 
     @Override
     public void clickValid(InventoryClickEvent e) {
-        e.getWhoClicked().getInventory().addItem(e.getCurrentItem());
+        ItemStack clickedItem = e.getCurrentItem();
+
+        CustomItem customItem = instance.getCustomItems().get(clickedItem.getItemMeta().getPersistentDataContainer().get(menuKey, PersistentDataType.INTEGER));
+
+        e.getWhoClicked().getInventory().addItem(customItem.getItem());
+
     }
 }

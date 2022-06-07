@@ -21,7 +21,7 @@ import java.util.List;
 public class SlimeHead extends Helmet {
 
     public SlimeHead(int tag, MbarrrManyItems instance) {
-        super(tag, instance);
+        super(tag, instance, "SlimeHead");
 
         addEffect(PotionEffectType.NIGHT_VISION, 1);
 

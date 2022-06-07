@@ -1,27 +1,24 @@
-package github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Bows;
+package github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Staffs;
 
 import com.shampaggon.crackshot.events.WeaponDamageEntityEvent;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.CrackShotItem;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.potion.PotionEffectType;
 
-/**
- * Sets target alight, deals high damage
- *
- */
+public class SunStaff extends CrackShotItem {
 
-public class DemonicBow extends CrackShotItem {
-
-    private final static int FIRE_SECONDS = 5*20;
+    private static final int FIRE_SECONDS = 6;
 
     /**
      * Generic constructor
      * Handheld items are all crackshot weapons
      *
      * @param customModelData       Custom model data, or 0 for none
-
      */
-    public DemonicBow(int customModelData) {
-        super("DemonicBow", customModelData, true);
+    public SunStaff(int customModelData) {
+        super("SunStaff", customModelData, false);
+
+        addTargetEffect(PotionEffectType.GLOWING, 6, 1);
+        addUserEffect(PotionEffectType.GLOWING, 2, 1);
     }
 
     /**
@@ -31,6 +28,6 @@ public class DemonicBow extends CrackShotItem {
     @Override
     protected void onProjectileHit(WeaponDamageEntityEvent e) {
         super.onProjectileHit(e);
-        e.getVictim().setFireTicks(FIRE_SECONDS);
+        e.getVictim().setFireTicks(FIRE_SECONDS*20);
     }
 }

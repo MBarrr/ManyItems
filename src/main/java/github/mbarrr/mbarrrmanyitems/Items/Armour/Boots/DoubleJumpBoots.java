@@ -22,7 +22,7 @@ import java.util.List;
 public class DoubleJumpBoots extends CustomArmour {
 
     public DoubleJumpBoots(int tag, MbarrrManyItems instance) {
-        super(ArmourSlot.BOOTS, Material.DIAMOND_BOOTS, tag, instance);
+        super(ArmourSlot.BOOTS, Material.DIAMOND_BOOTS, tag, instance, "DJB");
 
         List<String> lore = new ArrayList<>();
         lore.add("§6Grants the wearer the ability to double jump!");

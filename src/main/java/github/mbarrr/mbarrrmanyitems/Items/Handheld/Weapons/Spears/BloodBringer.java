@@ -1,21 +1,19 @@
 package github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Spears;
 
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.CrackShotItem;
+import org.bukkit.potion.PotionEffectType;
 
-/**
- * Craftable weapon
- * Medium damage, low speed
- * Throwable
- */
-
-public class SteelSpear extends CrackShotItem {
+public class BloodBringer extends CrackShotItem {
     /**
      * Generic constructor
      * Handheld items are all crackshot weapons
      *
      * @param customModelData       Custom model data, or 0 for none
      */
-    public SteelSpear(int customModelData) {
-        super("SteelSpear", customModelData, false);
+    public BloodBringer(int customModelData) {
+        super("BloodBringer", customModelData, true);
+
+        addTargetEffect(PotionEffectType.WITHER, 4, 1);
+        addTargetEffect(PotionEffectType.HUNGER, 4, 2);
     }
 }

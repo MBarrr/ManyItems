@@ -4,10 +4,9 @@ import github.mbarrr.mbarrrmanyitems.Items.Handheld.CrackShotItem;
 import org.bukkit.potion.PotionEffectType;
 
 /**
- * Levitates and slows target
+ * Freezes target
  */
-
-public class WodnerStaff extends CrackShotItem {
+public class IceStaff extends CrackShotItem {
     /**
      * Generic constructor
      * Handheld items are all crackshot weapons
@@ -16,10 +15,10 @@ public class WodnerStaff extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      * @param requiresEquipListener
      */
-    public WodnerStaff(String itemTitle, int customModelData, boolean requiresEquipListener) {
+    public IceStaff(String itemTitle, int customModelData, boolean requiresEquipListener) {
         super(itemTitle, customModelData, requiresEquipListener);
 
-        addTargetEffect(PotionEffectType.LEVITATION, 4, 1);
-        addTargetEffect(PotionEffectType.GLOWING, 4, 1);
+
+        addTargetEffect(PotionEffectType.SLOW, 6, 2);
     }
 }
