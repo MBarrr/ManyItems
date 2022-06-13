@@ -109,6 +109,7 @@ public final class MbarrrManyItems extends JavaPlugin{
                 //Set CustomModelData for empty meta
                 ItemMeta meta = displayItem.getItemMeta();
                 meta.setCustomModelData(modelID);
+
                 displayItem.setItemMeta(meta);
 
                 return displayItem;
