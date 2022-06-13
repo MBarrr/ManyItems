@@ -115,7 +115,7 @@ public class CustomArmour implements Listener {
 
     /**
      * Give player effects and add to list if player is wearing armour according to checkPlayerArmour
-     * @param player
+     * @param player Player
      */
     protected void checkPutOn(Player player){
         //Wait one tick and check if the player is wearing the piece of aromur
@@ -136,15 +136,23 @@ public class CustomArmour implements Listener {
      * This throws a ConcurrentModificationException when a player is dropped from the list, I'm ignoring it on account of the fact I've no idea about it
      */
     private void check(){
-        try{
-            for(Player player:players){
-                if (checkPlayerArmour(player)) {
-                    playerRenewEffect(player);
-                    break;
-                }
-                removePlayerEffect(player);
+        List<Player> tempPlayerStore = new ArrayList<>();
+
+
+        for(Player player:players){
+            if (checkPlayerArmour(player)) {
+                playerRenewEffect(player);
             }
-        }catch(ConcurrentModificationException e){}
+            else{
+                tempPlayerStore.add(player);
+            }
+
+        }
+
+        for(Player player:tempPlayerStore){
+            removePlayerEffect(player);
+        }
+        tempPlayerStore.clear();
     }
 
     /**
@@ -159,7 +167,7 @@ public class CustomArmour implements Listener {
 
     /**
      * Listen for player joining with armour on
-     * @param e
+     * @param e PlayerJoinEvent
      */
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent e){
@@ -173,10 +181,11 @@ public class CustomArmour implements Listener {
 
     /**
      * Handles when a player puts on armour via right-clicking with the item in their hand
-     * @param e
+     * @param e PlayerInteractEvent
      */
     @EventHandler
     public void playerRightClickArmour(PlayerInteractEvent e){
+        if(e.getHand() == null) return;
         if(!e.getHand().equals(EquipmentSlot.HAND)) {
             e.setCancelled(true);
             return;
@@ -215,8 +224,8 @@ public class CustomArmour implements Listener {
 
     /**
      * Checks whether the player is wearing the correct item in the armour slot relating to that item
-     * @param p
-     * @return
+     * @param p Player
+     * @return True if the player is wearing the armour
      */
     private boolean checkPlayerArmour(Player p){
         ItemStack playerArmour = p.getInventory().getArmorContents()[3-slot];
@@ -225,26 +234,28 @@ public class CustomArmour implements Listener {
 
     /**
      * Checks whether an item is not null and has the right armour tag
-     * @param item
-     * @return
+     * @param item Item to check
+     * @return True if the item has the right armour tag
      */
     protected boolean checkArmourItem(ItemStack item){
         if(!(item != null && instance.hasArmourTag(item))) return false;
 
-        if(instance.getArmourTag(item) == tag) return true;
-        return false;
-
+        return instance.getArmourTag(item) == tag;
     }
 
 
 
     /**
      * Checks whether player is in the player list for this armour
-     * @param player
-     * @return
+     * @param player Player to check
+     * @return True if in list
      */
     public boolean isPlayerWearingArmour(Player player){
         return players.contains(player);
+    }
+
+    public ItemStack getItem() {
+        return item;
     }
 
     protected void playerAddEffect(Player player){
@@ -296,6 +307,7 @@ public class CustomArmour implements Listener {
         return title;
     }
 
+    @SuppressWarnings("ConstantConditions")
     protected void setModelTag(int modelTag){
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setCustomModelData(modelTag);

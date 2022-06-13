@@ -1,18 +1,16 @@
 package github.mbarrr.mbarrrmanyitems.Commands;
 
 import github.mbarrr.mbarrrmanyitems.MbarrrManyItems;
-import net.minecraft.server.v1_16_R3.EntityPlayer;
-import net.minecraft.server.v1_16_R3.World;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 public class DebugCommand implements CommandExecutor {
 
@@ -23,36 +21,7 @@ public class DebugCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if(!(sender instanceof Player)) return false;
-
-        if(args[0].equalsIgnoreCase("get")) {
-            sender.sendMessage("starting");
-
-            Player player = (Player) sender;
-
-            Location loc = player.getLocation();
-
-            CraftPlayer cp = (CraftPlayer) player;
-
-            EntityPlayer nmsPlayer = cp.getHandle();
-
-            World world = ((CraftWorld) loc.getWorld()).getHandle();
-
-            sender.sendMessage("stopped");
-        }
-
-        else{
-            int i = Integer.parseInt(args[0]);
-
-            ItemStack test = new ItemStack(Material.DIAMOND_HOE);
-            ItemMeta meta = test.getItemMeta();
-            meta.setCustomModelData(1000000+i);
-            test.setItemMeta(meta);
-            ((Player) sender).getInventory().addItem(test);
-        }
-
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
 
         return true;

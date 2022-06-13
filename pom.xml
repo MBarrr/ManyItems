@@ -76,12 +76,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.sample</groupId>
             <artifactId>sample</artifactId>
             <version>1.0</version>
@@ -92,6 +86,11 @@
             <groupId>com.github.MBarrr</groupId>
             <artifactId>GUILib</artifactId>
             <version>1.0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations-java5</artifactId>
+            <version>22.0.0</version>
         </dependency>
     </dependencies>
 </project>

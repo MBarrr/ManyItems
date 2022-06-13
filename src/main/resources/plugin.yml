@@ -1,7 +1,7 @@
 name: MbarrrManyItems
 version: '${project.version}'
 main: github.mbarrr.mbarrrmanyitems.MbarrrManyItems
-api-version: 1.16
+api-version: 1.18
 authors: [ Mbarrr ]
 website: github.com/mbarrr
 commands:

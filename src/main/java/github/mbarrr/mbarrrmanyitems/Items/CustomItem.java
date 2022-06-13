@@ -20,10 +20,11 @@ import java.util.List;
 public class CustomItem implements IItem, Listener {
 
     public static long EFFECT_DURATION = 5*20L;
+    protected String itemTitle;
     private ItemStack item;
     private BukkitRunnable statusRunnable;
 
-    public CustomItem(boolean requiresEquipListener){
+    public CustomItem(boolean requiresEquipListener, String itemTitle){
         MbarrrManyItems instance = MbarrrManyItems.getInstance();
         //Register listener if required
         instance.getServer().getPluginManager().registerEvents(this, instance);
@@ -39,6 +40,7 @@ public class CustomItem implements IItem, Listener {
         }
 
         instance.addCustomItem(this);
+        this.itemTitle = itemTitle;
     }
 
     public ItemStack getItem(){
@@ -63,12 +65,16 @@ public class CustomItem implements IItem, Listener {
         Inventory inventory = player.getInventory();
 
         //Player swapped off item
-        if(inventory.getItem(e.getPreviousSlot()).equals(getItem())){
+        ItemStack previousItem = inventory.getItem(e.getPreviousSlot());
+
+        if(previousItem != null && previousItem.equals(getItem())){
             onDequip(player);
         }
 
         //Player swapped onto item
-        if(inventory.getItem(e.getNewSlot()).equals(getItem())){
+        ItemStack newItem = inventory.getItem(e.getNewSlot());
+
+        if(newItem != null && newItem.equals(getItem())){
             onEquip(player);
         }
     }
@@ -82,6 +88,10 @@ public class CustomItem implements IItem, Listener {
 
     }
 
+    public String getItemTitle() {
+        return itemTitle;
+    }
+
     protected void onEquip(Player player){
 
     }
@@ -93,13 +103,4 @@ public class CustomItem implements IItem, Listener {
     protected void renewEffects(){
 
     }
-
-
-    /**
-     * Player leaves while effect is in place
-     */
-
-    /**
-     * Player joins while effect is in place
-     */
 }

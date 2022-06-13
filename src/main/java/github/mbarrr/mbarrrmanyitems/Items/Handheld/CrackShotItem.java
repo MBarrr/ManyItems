@@ -4,7 +4,6 @@ import com.shampaggon.crackshot.events.WeaponHitBlockEvent;
 import com.shampaggon.crackshot.events.WeaponShootEvent;
 import github.mbarrr.mbarrrmanyitems.Items.CustomItem;
 import github.mbarrr.mbarrrmanyitems.MbarrrManyItems;
-import net.minecraft.server.v1_16_R3.WorldGenDecoratorDungeonConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -22,8 +21,6 @@ import java.util.List;
 
 public class CrackShotItem extends CustomItem implements Listener {
 
-
-    private String itemTitle;
     private boolean crackshotItemFound;
     private int customModelData;
     private List<PotionEffect> targetEffects = new ArrayList<>();
@@ -39,10 +36,8 @@ public class CrackShotItem extends CustomItem implements Listener {
      * CustomItem and CrackShotItem both register listeners, this could be problematic in the future
      */
     public CrackShotItem(String itemTitle, int customModelData, boolean requiresEquipListener){
-        super(requiresEquipListener);
+        super(requiresEquipListener, itemTitle);
         MbarrrManyItems instance = MbarrrManyItems.getInstance();
-
-        this.itemTitle = itemTitle;
 
         //Check if crackshot item can be found
         if(instance.getCSInstance().generateWeapon(itemTitle) == null){
@@ -59,6 +54,7 @@ public class CrackShotItem extends CustomItem implements Listener {
         if(customModelData != 0){
             ItemStack item = getItem();
             ItemMeta itemMeta = item.getItemMeta();
+            //noinspection ConstantConditions
             itemMeta.setCustomModelData(customModelData);
             item.setItemMeta(itemMeta);
             setItem(item);
@@ -88,7 +84,7 @@ public class CrackShotItem extends CustomItem implements Listener {
 
     /**
      * Fired when a player damages another player with the item
-     * @param e
+     * @param e WeaponDamageEntityEvent
      */
     @EventHandler
     private void itemHitEvent(WeaponDamageEntityEvent e){
@@ -136,7 +132,7 @@ public class CrackShotItem extends CustomItem implements Listener {
     @Override
     protected void onDequip(Player player) {
         super.onDequip(player);
-        if(activePlayers.contains(player)) activePlayers.remove(player);
+        activePlayers.remove(player);
     }
 
     @Override

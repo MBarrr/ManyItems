@@ -7,7 +7,6 @@ import github.mbarrr.mbarrrmanyitems.Items.Armour.CustomArmour;
 import github.mbarrr.mbarrrmanyitems.Items.Armour.Boots.DoubleJumpBoots;
 import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.SlimeHead;
 import github.mbarrr.mbarrrmanyitems.Items.CustomItem;
-import github.mbarrr.mbarrrmanyitems.Items.Handheld.Mounts.Flying.BroomStick;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Spears.Trident;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Swords.EbonyBlade;
 import mbarrr.github.guilib.GUILib;
@@ -17,6 +16,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +46,7 @@ public final class MbarrrManyItems extends JavaPlugin{
 
     private MainGUI mainGUI;
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onEnable() {
         
@@ -68,7 +69,6 @@ public final class MbarrrManyItems extends JavaPlugin{
     }
 
     private void initializeItems(){
-        BroomStick broomStick = new BroomStick();
         DoubleJumpBoots doubleJumpBoots = new DoubleJumpBoots(0, this);
         SlimeHead slimeHead = new SlimeHead(1, this);
         Trident trident = new Trident();
@@ -92,18 +92,49 @@ public final class MbarrrManyItems extends JavaPlugin{
         return null;
     }
 
-    public void addTag(NamespacedKey key, ItemStack item, int val){
+    /**
+     * Get the ItemStack associated with a custom item from it's name
+     * @param name Name of the CustomItem object
+     * @return @Nullable The itemstack, or null if not found
+     */
+    public ItemStack getCustomItem(String name){
+        for(CustomItem item:customItems){
+            if(item.getItemTitle().equals(name)){
+                return item.getItem();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the ItemStack associated with a custom armour from it's name
+     * @param name Name of the CustomArmour object
+     * @return @Nullable The itemstack, or null if not found
+     */
+    public ItemStack getCustomArmourItem(String name){
+        for(CustomArmour item:customArmours){
+            if(item.getName().equals(name)){
+                return item.getItem();
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    public void addTag(NamespacedKey key, @NotNull ItemStack item, int val){
         ItemMeta itemMeta = item.getItemMeta();
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
         container.set(key, PersistentDataType.INTEGER, val);
         item.setItemMeta(itemMeta);
     }
-    public boolean hasTag(ItemStack item, NamespacedKey key){
+    @SuppressWarnings("ConstantConditions")
+    public boolean hasTag(@NotNull ItemStack item, NamespacedKey key){
         ItemMeta itemMeta = item.getItemMeta();
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
         return container.has(key, PersistentDataType.INTEGER);
     }
-    public int getTag(ItemStack item, NamespacedKey key){
+    @SuppressWarnings("ConstantConditions")
+    public int getTag(@NotNull ItemStack item, NamespacedKey key){
         ItemMeta itemMeta = item.getItemMeta();
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
         return container.get(key, PersistentDataType.INTEGER);
@@ -119,6 +150,7 @@ public final class MbarrrManyItems extends JavaPlugin{
     }
     public void setDisplayAttributes(ItemStack item, String title, List<String> lore){
         ItemMeta meta = item.getItemMeta();
+        //noinspection ConstantConditions
         meta.setDisplayName(title);
         meta.setLore(lore);
         item.setItemMeta(meta);

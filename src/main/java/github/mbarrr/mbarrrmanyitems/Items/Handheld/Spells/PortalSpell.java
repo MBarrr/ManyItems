@@ -2,7 +2,6 @@ package github.mbarrr.mbarrrmanyitems.Items.Handheld.Spells;
 
 import com.shampaggon.crackshot.events.WeaponShootEvent;
 import github.mbarrr.mbarrrmanyitems.MbarrrManyItems;
-import net.minecraft.server.v1_16_R3.PortalTravelAgent;
 import org.bukkit.entity.Player;
 
 public class PortalSpell extends Spell{
