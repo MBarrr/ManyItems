@@ -5,6 +5,7 @@ import github.mbarrr.mbarrrmanyitems.Commands.DebugCommand;
 import github.mbarrr.mbarrrmanyitems.Commands.MainGUICommand;
 import github.mbarrr.mbarrrmanyitems.Items.Armour.CustomArmour;
 import github.mbarrr.mbarrrmanyitems.Items.Armour.Boots.DoubleJumpBoots;
+import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.Helmet;
 import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.SlimeHead;
 import github.mbarrr.mbarrrmanyitems.Items.CustomItem;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Spears.Trident;
@@ -93,28 +94,52 @@ public final class MbarrrManyItems extends JavaPlugin{
     }
 
     /**
-     * Get the ItemStack associated with a custom item from it's name
+     * Get the display ItemStack associated with a custom item from it's name, display item has no custom attributes except for model data
      * @param name Name of the CustomItem object
-     * @return @Nullable The itemstack, or null if not found
+     * @return @Nullable The display itemstack, or null if not found
      */
-    public ItemStack getCustomItem(String name){
+    public ItemStack getDisplayCustomItem(String name){
         for(CustomItem item:customItems){
             if(item.getItemTitle().equals(name)){
-                return item.getItem();
+                //Get CustomModelData and clear item meta
+                ItemStack displayItem = item.getItem();
+                int modelID = displayItem.getItemMeta().getCustomModelData();
+                displayItem.setItemMeta(null);
+
+                //Set CustomModelData for empty meta
+                ItemMeta meta = displayItem.getItemMeta();
+                meta.setCustomModelData(modelID);
+                displayItem.setItemMeta(meta);
+
+                return displayItem;
             }
         }
         return null;
     }
 
     /**
-     * Get the ItemStack associated with a custom armour from it's name
+     * Get the display ItemStack associated with a custom armour from it's name, display item has no custom attributes except for model data
      * @param name Name of the CustomArmour object
-     * @return @Nullable The itemstack, or null if not found
+     * @return @Nullable The display itemstack, or null if not found
      */
-    public ItemStack getCustomArmourItem(String name){
+    public ItemStack getCustomArmourDisplayItem(String name){
         for(CustomArmour item:customArmours){
             if(item.getName().equals(name)){
-                return item.getItem();
+                ItemStack displayItem = item.getItem();
+
+                if(item instanceof Helmet && displayItem.getItemMeta().hasCustomModelData()){
+                    int modelID = displayItem.getItemMeta().getCustomModelData();
+                    displayItem.setItemMeta(null);
+                    ItemMeta meta = displayItem.getItemMeta();
+                    meta.setCustomModelData(modelID);
+                    displayItem.setItemMeta(meta);
+                }
+
+                else{
+                    displayItem.setItemMeta(null);
+                }
+
+                return displayItem;
             }
         }
         return null;
