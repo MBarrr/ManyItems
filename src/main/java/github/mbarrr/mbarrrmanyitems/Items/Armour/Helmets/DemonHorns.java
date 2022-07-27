@@ -5,19 +5,34 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Demon horns
  * Wearer takes no fire damage,
  * damager is set on fire on attack
  */
-public class DemonHorns extends Helmet{
+
+/**
+ * TEXTURE CREDITS
+ * Zoom31
+ * https://www.planetminecraft.com/member/zoom31/
+ *
+ */
+public class DemonHorns extends Helmet {
 
     /**
      * Generic constructor
      * @param instance Instance
      */
     public DemonHorns(MbarrrManyItems instance) {
-        super(3, instance, "DemonHorns");
+        super(7, instance, "Demon Horns");
+
+        String title = "Demon Horns";
+        List<String> lore = new ArrayList<>();
+
+        setDisplayAttributes(title, lore);
     }
 
     /**

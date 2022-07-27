@@ -21,7 +21,7 @@ public class DemonicBow extends CrackShotItem {
 
      */
     public DemonicBow(int customModelData) {
-        super("DemonicBow", customModelData, true);
+        super("Demonic Bow", customModelData, true);
     }
 
     /**

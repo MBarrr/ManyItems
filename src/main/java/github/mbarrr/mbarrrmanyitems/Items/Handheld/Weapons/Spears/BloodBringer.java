@@ -11,7 +11,7 @@ public class BloodBringer extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      */
     public BloodBringer(int customModelData) {
-        super("BloodBringer", customModelData, true);
+        super("Bloodbringer", customModelData, true);
 
         addTargetEffect(PotionEffectType.WITHER, 4, 1);
         addTargetEffect(PotionEffectType.HUNGER, 4, 2);

@@ -15,7 +15,7 @@ public class SunStaff extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      */
     public SunStaff(int customModelData) {
-        super("SunStaff", customModelData, false);
+        super("Sun Staff", customModelData, false);
 
         addTargetEffect(PotionEffectType.GLOWING, 6, 1);
         addUserEffect(PotionEffectType.GLOWING, 2, 1);

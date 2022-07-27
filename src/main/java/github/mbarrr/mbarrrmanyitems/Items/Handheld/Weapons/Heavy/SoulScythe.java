@@ -2,14 +2,14 @@ package github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Heavy;
 
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.CrackShotItem;
 
-public class MorningStar extends CrackShotItem {
+public class SoulScythe extends CrackShotItem {
     /**
      * Generic constructor
      * Handheld items are all crackshot weapons
      *
-     * @param customModelData       Custom model data, or 0 for none
+
      */
-    public MorningStar(int customModelData) {
-        super("Morning Star", customModelData, true);
+    public SoulScythe() {
+        super("Soul Scythe", 7, false);
     }
 }

@@ -27,13 +27,10 @@ public class MainGUICommand implements CommandExecutor {
             case "reload":
                 mainGUI.loadCustomItems();
                 break;
-            case "show":
+            case "open":
                 mainGUI.openInventory((Player) sender, 0);
 
         }
-
-
-
 
         return true;
     }

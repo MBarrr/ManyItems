@@ -2,6 +2,7 @@ package github.mbarrr.mbarrrmanyitems.Items;
 
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.CrackShotItem;
 import github.mbarrr.mbarrrmanyitems.MbarrrManyItems;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +27,9 @@ public class CustomItem implements IItem, Listener {
 
     public CustomItem(boolean requiresEquipListener, String itemTitle){
         MbarrrManyItems instance = MbarrrManyItems.getInstance();
+
+        setItem(new ItemStack(Material.BARRIER));
+
         //Register listener if required
         instance.getServer().getPluginManager().registerEvents(this, instance);
 

@@ -13,10 +13,9 @@ public class KnottedBow extends CrackShotItem {
      * Generic constructor
      * Handheld items are all crackshot weapons
      *
-     * @param customModelData       Custom model data, or 0 for none
      */
-    public KnottedBow(int customModelData) {
-        super("KnottedBow", customModelData, true);
+    public KnottedBow() {
+        super("Knotted Bow", 10, true);
 
         addTargetEffect(PotionEffectType.LEVITATION, 2, 1);
         addTargetEffect(PotionEffectType.CONFUSION, 2, 1);

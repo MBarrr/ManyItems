@@ -15,10 +15,9 @@ public class JadeSpear extends CrackShotItem {
      * Generic constructor
      * Handheld items are all crackshot weapons
      *
-     * @param customModelData       Custom model data, or 0 for none
      */
-    public JadeSpear(int customModelData) {
-        super("JadeSpear", customModelData, true);
+    public JadeSpear() {
+        super("Jade Spear", 4, true);
 
         addEquipEffect(PotionEffectType.SPEED, 1);
     }

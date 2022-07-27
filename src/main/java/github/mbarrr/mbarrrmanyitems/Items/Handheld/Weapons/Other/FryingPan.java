@@ -15,6 +15,6 @@ public class FryingPan extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      */
     public FryingPan(int customModelData) {
-        super("FryingPan", customModelData, false);
+        super("Frying Pan", customModelData, false);
     }
 }

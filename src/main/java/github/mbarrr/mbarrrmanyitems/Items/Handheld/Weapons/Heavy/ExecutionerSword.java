@@ -11,7 +11,7 @@ public class ExecutionerSword extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      */
     public ExecutionerSword(int customModelData) {
-        super("ExecutionerSword", customModelData, true);
+        super("Executioner Sword", customModelData, true);
 
         addEquipEffect(PotionEffectType.SLOW, 1);
 

@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -13,12 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * TODO implement 1.5x damage when in water buff
+ * TODO FIX TEXTURE
+ * TODO FIX POTION BUFF
+ * TODO FIX RANGE
+ *
  * Trident is a mid tier weapon/transport item, it is dropped by
  * poseidon. If a player receives damage while holding the weapon out of water,
  * the damage received is multiplied by a factor of 1.25, respresenting a
  * vulnerability. For this reason the trident can be countered by
  * items such as the lasso, which can draw the user out of water, giving
  * them a 1.25 vulnerabliity
+ * If the user is in water, the weapon deals 1.5x damage
  * The trident deals high damage with a low attack speed
  */
 
@@ -28,12 +35,15 @@ public class Trident extends CrackShotItem {
     List<PotionEffect> potionEffects = new ArrayList<>();
 
     public Trident() {
-        super("Trident", 1000009, false);
+        super("Trident", 9, false);
         PotionEffect dolphinsGrace = new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 4*20, 3);
-        PotionEffect regen = new PotionEffect(PotionEffectType.REGENERATION, 1*20, 1);
-        PotionEffect nightVision = new PotionEffect(PotionEffectType.WATER_BREATHING, 4*20, 1);
+        PotionEffect regen = new PotionEffect(PotionEffectType.REGENERATION, 2*20, 1);
+        PotionEffect waterBreathing = new PotionEffect(PotionEffectType.WATER_BREATHING, 4*20, 2);
+        PotionEffect nightVision = new PotionEffect(PotionEffectType.NIGHT_VISION, 4*20, 1);
+
         potionEffects.add(dolphinsGrace);
         potionEffects.add(regen);
+        potionEffects.add(waterBreathing);
         potionEffects.add(nightVision);
     }
 

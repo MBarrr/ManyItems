@@ -11,7 +11,7 @@ public class TribalSpear extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      */
     public TribalSpear(int customModelData) {
-        super("TribalSpike", customModelData, true);
+        super("Tribal Spike", customModelData, true);
 
         addEquipEffect(PotionEffectType.SPEED, 2);
     }

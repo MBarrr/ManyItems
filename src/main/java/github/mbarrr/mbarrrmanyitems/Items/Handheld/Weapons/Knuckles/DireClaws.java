@@ -17,7 +17,7 @@ public class DireClaws extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      */
     public DireClaws(int customModelData) {
-        super("DireClaws", customModelData, true);
+        super("Wolf Claws", customModelData, true);
 
         addEquipEffect(PotionEffectType.SPEED, 1);
         addEquipEffect(PotionEffectType.NIGHT_VISION, 1);

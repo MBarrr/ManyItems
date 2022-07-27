@@ -12,11 +12,11 @@ import java.util.List;
  *
  */
 
-public class VikingHelmet extends Helmet {
-    public VikingHelmet(MbarrrManyItems instance) {
-        super(5, instance, "Viking Helmet");
+public class NobleManHelmet extends Helmet {
+    public NobleManHelmet(MbarrrManyItems instance) {
+        super(6, instance, "Nobleman's Helmet");
 
-        String title = "Viking Helmet";
+        String title = "Nobleman Helmet";
         List<String> lore = new ArrayList<>();
 
         setDisplayAttributes(title, lore);

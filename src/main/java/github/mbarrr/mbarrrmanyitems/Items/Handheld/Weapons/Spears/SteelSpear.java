@@ -16,6 +16,6 @@ public class SteelSpear extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      */
     public SteelSpear(int customModelData) {
-        super("SteelSpear", customModelData, false);
+        super("Steel Spear", customModelData, false);
     }
 }

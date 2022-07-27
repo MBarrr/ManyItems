@@ -17,7 +17,7 @@ public class IronKnuckles extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      */
     public IronKnuckles(int customModelData) {
-        super("IronKnuckles", customModelData, true);
+        super("Iron Knuckles", customModelData, true);
 
         addEquipEffect(PotionEffectType.SPEED, 1);
     }

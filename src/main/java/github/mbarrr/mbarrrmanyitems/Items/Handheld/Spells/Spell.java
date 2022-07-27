@@ -1,16 +1,13 @@
 package github.mbarrr.mbarrrmanyitems.Items.Handheld.Spells;
 
-import com.shampaggon.crackshot.events.WeaponPreShootEvent;
 import com.shampaggon.crackshot.events.WeaponShootEvent;
-import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.CrystalCrown;
+import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.Unimplemented.CrystalCrown;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.CrackShotItem;
 import github.mbarrr.mbarrrmanyitems.MbarrrManyItems;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 
 public class Spell extends CrackShotItem {
 

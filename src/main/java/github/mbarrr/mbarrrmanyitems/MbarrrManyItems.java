@@ -5,11 +5,21 @@ import github.mbarrr.mbarrrmanyitems.Commands.DebugCommand;
 import github.mbarrr.mbarrrmanyitems.Commands.MainGUICommand;
 import github.mbarrr.mbarrrmanyitems.Items.Armour.CustomArmour;
 import github.mbarrr.mbarrrmanyitems.Items.Armour.Boots.DoubleJumpBoots;
+import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.*;
 import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.Helmet;
-import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.SlimeHead;
 import github.mbarrr.mbarrrmanyitems.Items.CustomItem;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Bows.DemonicBow;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Bows.KnottedBow;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Heavy.SoulScythe;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Heavy.SpectralHammer;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Spears.JadeSpear;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Spears.SnakeSting;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Spears.Trident;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Swords.AshenBlade;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Swords.EbonyBlade;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Swords.SteelSword;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Swords.Zatoichi;
+import github.mbarrr.mbarrrmanyitems.Items.Handheld.Weapons.Throwable.Glaive;
 import mbarrr.github.guilib.GUILib;
 import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
@@ -37,14 +47,10 @@ import java.util.List;
 public final class MbarrrManyItems extends JavaPlugin{
 
     private NamespacedKey armourKey = new NamespacedKey(this, "MI-Armour");
-
     private List<CustomItem> customItems = new ArrayList<>();
     private List<CustomArmour> customArmours = new ArrayList<>();
-
     private CSUtility csUtility;
-
     private GUILib guiLib;
-
     private MainGUI mainGUI;
 
     @SuppressWarnings("ConstantConditions")
@@ -71,9 +77,31 @@ public final class MbarrrManyItems extends JavaPlugin{
 
     private void initializeItems(){
         DoubleJumpBoots doubleJumpBoots = new DoubleJumpBoots(0, this);
-        SlimeHead slimeHead = new SlimeHead(1, this);
-        Trident trident = new Trident();
+
+
+        BanditMask banditMask = new BanditMask(this);
+        BanziHelmet banziHelmet = new BanziHelmet(this);
+        CrusaderHelmet crusaderHelmet = new CrusaderHelmet(this);
+        DemonHorns demonHorns = new DemonHorns(this);
+        Halo halo = new Halo(this);
+        NobleManHelmet nobleManHelmet = new NobleManHelmet(this);
+        RomanHelmet romanHelmet = new RomanHelmet(this);
+        SlimeHead slimeHead = new SlimeHead(this);
+        VikingHelmet vikingHelmet = new VikingHelmet(this);
+
         EbonyBlade ebonyBlade = new EbonyBlade();
+        Trident trident = new Trident();
+        Glaive glaive = new Glaive();
+        JadeSpear jadeSpear = new JadeSpear();
+        SteelSword steelSword = new SteelSword();
+        SnakeSting snakeSting = new SnakeSting();
+        KnottedBow knottedBow = new KnottedBow();
+        SpectralHammer spectralHammer = new SpectralHammer();
+
+        Zatoichi zatoichi = new Zatoichi();
+        SoulScythe soulScythe = new SoulScythe();
+        AshenBlade ashenBlade = new AshenBlade();
+
     }
 
     @Override
@@ -119,7 +147,7 @@ public final class MbarrrManyItems extends JavaPlugin{
     }
 
     /**
-     * Get the display ItemStack associated with a custom armour from it's name, display item has no custom attributes except for model data
+     * Get the display ItemStack asso   ciated with a custom armour from it's name, display item has no custom attributes except for model data
      * @param name Name of the CustomArmour object
      * @return @Nullable The display itemstack, or null if not found
      */
@@ -144,6 +172,16 @@ public final class MbarrrManyItems extends JavaPlugin{
             }
         }
         return null;
+    }
+
+    public List<Helmet> getCustomHelmets(){
+        List<Helmet> helmets = new ArrayList<>();
+
+        for(CustomArmour customArmour:customArmours){
+            if(customArmour instanceof Helmet) helmets.add((Helmet) customArmour);
+        }
+
+        return helmets;
     }
 
     @SuppressWarnings("ConstantConditions")

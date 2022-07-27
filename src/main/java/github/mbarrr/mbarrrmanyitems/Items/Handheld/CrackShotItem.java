@@ -39,6 +39,7 @@ public class CrackShotItem extends CustomItem implements Listener {
         super(requiresEquipListener, itemTitle);
         MbarrrManyItems instance = MbarrrManyItems.getInstance();
 
+
         //Check if crackshot item can be found
         if(instance.getCSInstance().generateWeapon(itemTitle) == null){
             Bukkit.getConsoleSender().sendMessage("Item: " + itemTitle + " not found in CS title list");
@@ -55,12 +56,11 @@ public class CrackShotItem extends CustomItem implements Listener {
             ItemStack item = getItem();
             ItemMeta itemMeta = item.getItemMeta();
             //noinspection ConstantConditions
-            itemMeta.setCustomModelData(customModelData);
+            itemMeta.setCustomModelData(1000000+customModelData);
             item.setItemMeta(itemMeta);
             setItem(item);
         }
 
-        instance.getServer().getPluginManager().registerEvents(this, instance);
         crackshotItemFound = true;
     }
 
@@ -69,7 +69,8 @@ public class CrackShotItem extends CustomItem implements Listener {
      * @param e Event
      */
     @EventHandler
-    private void weaponShootEvent(WeaponShootEvent e){
+    public void weaponShootEvent(WeaponShootEvent e){
+        Bukkit.broadcastMessage("WeaponShootEvent Called");
         if(!e.getWeaponTitle().equals(itemTitle)) return;
         onShoot(e);
     }
@@ -83,16 +84,19 @@ public class CrackShotItem extends CustomItem implements Listener {
     }
 
     /**
-     * Fired when a player damages another player with the item
+     * Fired when a player damages another player with a crackshot item
+     * Note: Energy projectiles will count as melee hits
      * @param e WeaponDamageEntityEvent
      */
     @EventHandler
-    private void itemHitEvent(WeaponDamageEntityEvent e){
+    public void itemHitEvent(WeaponDamageEntityEvent e){
+        Bukkit.broadcastMessage("WeaponDamageEntityEvent called");
         if(!e.getWeaponTitle().equals(itemTitle)) return;
 
         if(e.getDamager() instanceof Projectile){
             onProjectileHit(e);
         }
+
         else{
             onMeleeHit(e);
         }
@@ -103,23 +107,25 @@ public class CrackShotItem extends CustomItem implements Listener {
      * @param e Event
      */
     protected void onMeleeHit(WeaponDamageEntityEvent e){
+        Bukkit.broadcastMessage("OnMeleeHit called for "+itemTitle);
         if(!(e.getVictim() instanceof LivingEntity)) return;
         e.getPlayer().addPotionEffects(userEffects);
         ((LivingEntity) e.getVictim()).addPotionEffects(targetEffects);
     }
 
     protected void onProjectileHit(WeaponDamageEntityEvent e){
-        Bukkit.broadcastMessage(itemTitle+ " CS WeaponDamageEntityEvent fired");
+        Bukkit.broadcastMessage("onProjectileHit called for "+itemTitle);
     }
 
     @EventHandler
-    private void blockHitEvent(WeaponHitBlockEvent e){
+    public void blockHitEvent(WeaponHitBlockEvent e){
+        Bukkit.broadcastMessage("WeaponHitBlockEvent called");
         if(!e.getWeaponTitle().equals(itemTitle)) return;
         projectileHitBlock(e);
     }
 
     protected void projectileHitBlock(WeaponHitBlockEvent e){
-        Bukkit.broadcastMessage(itemTitle+ " CS WeaponHitBlockEvent fired");
+        Bukkit.broadcastMessage("projectileHitBlock called for "+itemTitle);
     }
 
     @Override

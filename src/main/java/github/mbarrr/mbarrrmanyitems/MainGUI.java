@@ -1,5 +1,7 @@
 package github.mbarrr.mbarrrmanyitems;
 
+import github.mbarrr.mbarrrmanyitems.Items.Armour.CustomArmour;
+import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.Helmet;
 import github.mbarrr.mbarrrmanyitems.Items.CustomItem;
 import github.mbarrr.mbarrrmanyitems.Items.Handheld.CrackShotItem;
 import mbarrr.github.guilib.GUI;
@@ -10,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainGUI extends GUI {
@@ -33,24 +36,18 @@ public class MainGUI extends GUI {
             CustomItem customItem = items.get(i);
             ItemStack icon = customItem.getItem();
 
-            List<String> lore = icon.getItemMeta().getLore();
-            lore.add("********** ADMIN INFO **********");
+            addItem(icon, menuKey, i, i, 0);
+        }
 
-            lore.add("CrackShot Item? " + customItem.isCrackShot());
+        loadCustomHelmets(items.size());
+    }
 
-            if (customItem.isCrackShot()) {
-                CrackShotItem crackShotItem = (CrackShotItem) customItem;
-                lore.add("CrackShot Item Found? " + crackShotItem.isCrackshotItemFound());
-                lore.add("Has custom model data? " + crackShotItem.hasCustomModelData());
+    public void loadCustomHelmets(int j){
+        List<Helmet> items = instance.getCustomHelmets();
 
-                if(crackShotItem.hasCustomModelData()){
-                    lore.add("Custom model data: " + crackShotItem.getCustomModelData());
-                }
-            }
-
-            ItemMeta meta = icon.getItemMeta();
-            meta.setLore(lore);
-            icon.setItemMeta(meta);
+        for(int i = j; i < items.size(); i++){
+            CustomArmour customItem = items.get(i);
+            ItemStack icon = customItem.getItem();
 
             addItem(icon, menuKey, i, i, 0);
         }

@@ -15,6 +15,6 @@ public class LongBow extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      */
     public LongBow(int customModelData) {
-        super("LongBow", customModelData, true);
+        super("Long Bow", customModelData, true);
     }
 }

@@ -15,7 +15,7 @@ public class CanoePaddle extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      */
     public CanoePaddle(int customModelData) {
-        super("CanoePaddle", customModelData, true);
+        super("Canoe Paddle", customModelData, true);
 
         addEquipEffect(PotionEffectType.SLOW, 1);
     }

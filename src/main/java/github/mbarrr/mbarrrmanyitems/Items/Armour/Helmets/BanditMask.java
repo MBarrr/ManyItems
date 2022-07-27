@@ -5,18 +5,22 @@ import github.mbarrr.mbarrrmanyitems.MbarrrManyItems;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * TEXTURE CREDITS
- * Zoom31
- * https://www.planetminecraft.com/member/zoom31/
- *
+ * Gives wearer speed
  */
 
-public class VikingHelmet extends Helmet {
-    public VikingHelmet(MbarrrManyItems instance) {
-        super(5, instance, "Viking Helmet");
+/**
+ * Credits
+ * FIND CREDITS
+ */
 
-        String title = "Viking Helmet";
+public class BanditMask extends Helmet {
+
+    public BanditMask(MbarrrManyItems instance) {
+        super(9, instance, "Bandit Mask");
+
+        String title = "Bandit Mask";
         List<String> lore = new ArrayList<>();
 
         setDisplayAttributes(title, lore);

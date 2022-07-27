@@ -20,8 +20,8 @@ import java.util.List;
 
 public class SlimeHead extends Helmet {
 
-    public SlimeHead(int tag, MbarrrManyItems instance) {
-        super(tag, instance, "SlimeHead");
+    public SlimeHead(MbarrrManyItems instance) {
+        super(2, instance, "Slime Head");
 
         addEffect(PotionEffectType.NIGHT_VISION, 1);
 
@@ -30,8 +30,6 @@ public class SlimeHead extends Helmet {
         lore.add("§2A disguise, maybe?");
 
         setDisplayAttributes(title, lore);
-
-
 
     }
 

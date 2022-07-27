@@ -42,7 +42,6 @@ public class CustomArmour implements Listener {
     private BukkitRunnable runnable;
     private ItemStack item;
 
-
     public CustomArmour(ArmourSlot armourSlot, Material material, int tag, MbarrrManyItems instance, String name){
         this.name = name;
         this.tag = tag;

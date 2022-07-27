@@ -15,6 +15,6 @@ public class MakeShiftBow extends CrackShotItem {
      * @param customModelData       Custom model data, or 0 for none
      */
     public MakeShiftBow(int customModelData) {
-        super("MakeShiftBow", customModelData, false);
+        super("Make-Shift Bow", customModelData, false);
     }
 }

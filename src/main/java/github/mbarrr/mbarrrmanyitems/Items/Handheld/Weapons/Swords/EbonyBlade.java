@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * TODO implement max health debuff
  * The ebony blade is a high tier weapon,
  * it deals high damage with a fast attack speed.
  * While weilding the weapon, it's user loses 4 hearts
@@ -30,11 +31,10 @@ public class EbonyBlade extends CrackShotItem {
      * ItemTitle: EbonyBlade
      */
     public EbonyBlade() {
-        super("EbonyBlade", 1000002, true);
+        super("Ebony Blade", 2, true);
 
         addTargetEffect(PotionEffectType.BLINDNESS, 20, 1);
         addUserEffect(PotionEffectType.WITHER, 20, 1);
-
 
         addEquipEffect(PotionEffectType.SPEED, 1);
         addEquipEffect(PotionEffectType.BLINDNESS, 1);

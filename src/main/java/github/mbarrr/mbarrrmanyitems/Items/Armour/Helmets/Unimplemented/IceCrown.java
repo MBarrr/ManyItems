@@ -1,5 +1,6 @@
-package github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets;
+package github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.Unimplemented;
 
+import github.mbarrr.mbarrrmanyitems.Items.Armour.Helmets.Helmet;
 import github.mbarrr.mbarrrmanyitems.MbarrrManyItems;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
@@ -17,7 +18,7 @@ import org.bukkit.potion.PotionEffectType;
  * attacker is slowed when attacking wearer
  *
  */
-public class IceCrown extends Helmet{
+public class IceCrown extends Helmet {
 
     private final PotionEffect attackerFreezeEffect = new PotionEffect(PotionEffectType.SLOW, 2, 2);
 

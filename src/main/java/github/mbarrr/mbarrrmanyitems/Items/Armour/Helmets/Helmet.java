@@ -20,7 +20,6 @@ public class Helmet extends CustomArmour {
     public Helmet(int tag, MbarrrManyItems instance, String title) {
         super(ArmourSlot.HELMET, Material.WOODEN_HOE, tag, instance, title);
 
-
         this.mat = Material.WOODEN_HOE;
 
         int modelTag = 1000000+tag;
